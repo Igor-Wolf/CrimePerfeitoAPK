@@ -5,6 +5,7 @@ import {
   Alert,
   ActivityIndicator,
   Text,
+  RefreshControl,
 } from 'react-native';
 
 import Icon from '@react-native-vector-icons/fontawesome';
@@ -50,12 +51,11 @@ function SearchProducts({navigation}) {
   }, []);
 
   const handlePressCreate = () => {
-    navigation.navigate('CreateProduct');
+    navigation.navigate('Create');
   };
   const handlePressSearchProducts = async () => {
     setLoading(true);
     await req();
-    navigation.navigate('SearchProducts');
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'orange'}}>
@@ -83,6 +83,9 @@ function SearchProducts({navigation}) {
         ) : (
           <>
             <Lista
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={req} />
+              }
               data={data}
               renderItem={({item}) => (
                 <CardItem

@@ -1,5 +1,5 @@
 import React from 'react';
-import {CardContainer, ImageCard, PricesCard, TextInternal, TitleText} from './styles';
+import {CardContainer, CardContainerIntern, ImageCard, PricesCard, TextInternal, TitleText} from './styles';
 import {Text, View} from 'react-native';
 
 export const CardItem = ({objectItem, onPress}) => {
@@ -8,7 +8,7 @@ export const CardItem = ({objectItem, onPress}) => {
   return (
     <CardContainer onPress={onPress}>
       <ImageCard source={{uri: dataItem.url}}></ImageCard>
-      <View>
+      <CardContainerIntern>
         <TitleText>{dataItem.name}</TitleText>
 
         <PricesCard>
@@ -25,7 +25,7 @@ export const CardItem = ({objectItem, onPress}) => {
             <TextInternal>Único: {dataItem.price.unique.toFixed(2)}</TextInternal>
           )}
         </PricesCard>
-      </View>
+      </CardContainerIntern>
     </CardContainer>
   );
 };

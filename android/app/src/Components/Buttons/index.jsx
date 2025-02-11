@@ -31,7 +31,7 @@ const ButtonDefaut = ({ variant = 'primary', onPress, title }) => {
             style={{ backgroundColor }} // Aplicando o background-color inline
             onPress={onPress}
         >
-            <Text style={{ color: variant === 'outline' ? 'rgb(255, 255, 254)' : 'black', fontWeight: 600}}>
+            <Text style={{ color: variant === 'outline' ? 'rgb(255, 255, 254)' : 'black', fontWeight: 700, fontSize: 18}}>
                 {title}
             </Text>
         </ButtonContainer>

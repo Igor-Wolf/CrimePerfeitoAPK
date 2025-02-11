@@ -17,6 +17,7 @@ export const CardContainerIntern = styled.View`
 
     display: flex;
     flex-direction: column;
+    flex:1;
 
 `
 
@@ -44,6 +45,10 @@ export const TitleText = styled.Text`
     font-weight: 600;
     color: black;
     padding: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+
 
 
 `

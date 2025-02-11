@@ -5,6 +5,7 @@ import {
   Alert,
   ActivityIndicator,
   Text,
+  RefreshControl,
 } from 'react-native';
 
 import Icon from '@react-native-vector-icons/fontawesome';
@@ -25,7 +26,7 @@ import {api} from '../../service/api';
 function Home({navigation}) {
   const [categoryFood, setCategoryFood] = useState('');
   const [data, setData] = useState([]); // Inicializando com um array vazio
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const category = [
     {name: 'Pizza'},
@@ -37,9 +38,12 @@ function Home({navigation}) {
 
   const req = async () => {
     try {
+      setLoading(true);
       const response = await api.get('/food'); // retornando todo o banco de dados
-      return response.data;
+      setData(response.data || []);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       Alert.alert(
         'Erro na requisição',
         error.message || 'Tente novamente mais tarde',
@@ -49,30 +53,21 @@ function Home({navigation}) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await req();
-      setData(response || []);
-      setLoading(false);
+      await req();
     };
 
     fetchData();
   }, []);
 
   const handlePressCreate = () => {
-    navigation.navigate('CreateProduct');
+    navigation.navigate('Create');
   };
 
   const handlePressSearchProducts = () => {
-
-    navigation.navigate('SearchProducts');
-
-
-  }
+    navigation.navigate('Search');
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'orange'}}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <>
           <Create onPress={handlePressCreate}>
             <Icon name="plus" size={40} color="#6dc724" />
           </Create>
@@ -99,8 +94,15 @@ function Home({navigation}) {
               showsHorizontalScrollIndicator={false}
             />
           </ScrollableCategory>
+              {loading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : (
+                <>
           <ScrollableContent>
             <Lista
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={req} />
+              }
               data={
                 categoryFood === ''
                   ? data
