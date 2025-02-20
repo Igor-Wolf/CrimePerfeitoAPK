@@ -22,6 +22,7 @@ import {
 } from './styles';
 import {CardItem} from '../../Components/Cards';
 import {api} from '../../service/api';
+import {CommonActions} from '@react-navigation/native';
 
 function Home({navigation}) {
   const [categoryFood, setCategoryFood] = useState('');
@@ -58,46 +59,58 @@ function Home({navigation}) {
 
     fetchData();
   }, []);
-
+  
+  //Reseta a navegação ao chegar na view HOME
+  navigation.dispatch((state) => {
+    // Remove all the screens after `Profile`
+    const index = state.routes.findIndex((r) => r.name === 'Home');
+    const routes = state.routes.slice(0, index + 1);
+  
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
   const handlePressCreate = () => {
     navigation.navigate('Create');
   };
-
+  
   const handlePressSearchProducts = () => {
     navigation.navigate('Search');
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'orange'}}>
-          <Create onPress={handlePressCreate}>
-            <Icon name="plus" size={40} color="#6dc724" />
-          </Create>
-          <Search onPress={handlePressSearchProducts}>
-            <Icon name="search" size={40} color="#000000" />
-          </Search>
-          <ContainerTitle>
-            <FontTitle>Crime Perfeito</FontTitle>
-          </ContainerTitle>
-          <ScrollableCategory>
-            <FlatList
-              horizontal={true}
-              data={category}
-              renderItem={({item}) => (
-                <Categories
-                  onPress={() => setCategoryFood(item.name)}
-                  style={
-                    categoryFood === item.name ? {backgroundColor: '#ddd'} : {}
-                  }>
-                  <TitleText>{item.name}</TitleText>
-                </Categories>
-              )}
-              keyExtractor={item => item.name}
-              showsHorizontalScrollIndicator={false}
-            />
-          </ScrollableCategory>
-              {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
-                <>
+      <Create onPress={handlePressCreate}>
+        <Icon name="plus" size={40} color="#6dc724" />
+      </Create>
+      <Search onPress={handlePressSearchProducts}>
+        <Icon name="search" size={40} color="#000000" />
+      </Search>
+      <ContainerTitle>
+        <FontTitle>Crime Perfeito</FontTitle>
+      </ContainerTitle>
+      <ScrollableCategory>
+        <FlatList
+          horizontal={true}
+          data={category}
+          renderItem={({item}) => (
+            <Categories
+              onPress={() => setCategoryFood(item.name)}
+              style={
+                categoryFood === item.name ? {backgroundColor: '#ddd'} : {}
+              }>
+              <TitleText>{item.name}</TitleText>
+            </Categories>
+          )}
+          keyExtractor={item => item.name}
+          showsHorizontalScrollIndicator={false}
+        />
+      </ScrollableCategory>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <>
           <ScrollableContent>
             <Lista
               refreshControl={

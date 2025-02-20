@@ -13,16 +13,16 @@ export const CardItem = ({objectItem, onPress}) => {
 
         <PricesCard>
           {dataItem.price.small && (
-            <TextInternal>Pequeno: {dataItem.price.small.toFixed(2)}</TextInternal>
+            <TextInternal>Pequeno: {' R$ ' + dataItem.price.small.toFixed(2)}</TextInternal>
           )}
           {dataItem.price.average && (
-            <TextInternal>Médio: {dataItem.price.average.toFixed(2)}</TextInternal>
+            <TextInternal>Médio: {' R$ ' + dataItem.price.average.toFixed(2)}</TextInternal>
           )}
           {dataItem.price.large && (
-            <TextInternal>Grande: {dataItem.price.large.toFixed(2)}</TextInternal>
+            <TextInternal>Grande: {' R$ ' + dataItem.price.large.toFixed(2)}</TextInternal>
           )}
           {dataItem.price.unique && (
-            <TextInternal>Único: {dataItem.price.unique.toFixed(2)}</TextInternal>
+            <TextInternal>Único: {' R$ ' + dataItem.price.unique.toFixed(2)}</TextInternal>
           )}
         </PricesCard>
       </CardContainerIntern>

@@ -16,6 +16,9 @@ export const DrawerContent = ({pressButton}) => {
       <DrawerButton onPress={() => { pressButton(); navigation.navigate('Search'); }}>
         <TextDrawer>Search</TextDrawer>
       </DrawerButton>      
+      <DrawerButton onPress={() => { pressButton(); navigation.navigate('About'); }}>
+        <TextDrawer>About</TextDrawer>
+      </DrawerButton>      
       {/* Adicione outros itens de navegação conforme necessário */}
     </Container>
   );
