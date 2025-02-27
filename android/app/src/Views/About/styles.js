@@ -4,7 +4,7 @@ export const Container = styled.View`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding:10px;
+    padding:8px;
     background-color: orange;
     flex: 1;
 
@@ -36,8 +36,23 @@ export const ContainerTitle = styled.View`
 
 export const FontTitle = styled.Text`
 
-  font-size:30px;
-  color: white;
-  
+font-family: 'DancingScript-Bold';
+  font-size: 35px;
+  font-weight: 600;
+  color: #fff; /* Cor do texto */
+
+  text-shadow-color: #fff; 
+  text-shadow-offset: 0 0;  /* Primeira sombra */
+  text-shadow-radius: 5px;
+
+  /* Segunda camada da sombra (mais intensa e azul) */
+  text-shadow-color: #0054ff;
+  text-shadow-offset: 0 0;
+  text-shadow-radius: 10px;
+
+  /* Terceira camada da sombra (mais intensa e azul) */
+  text-shadow-color: #0054ff;
+  text-shadow-offset: 0 0;
+  text-shadow-radius: 15px;
 
 `

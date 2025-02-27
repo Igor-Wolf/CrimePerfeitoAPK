@@ -6,6 +6,8 @@ import Icon from '@react-native-vector-icons/fontawesome';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Drawer from 'react-native-drawer';
 
+import Login from './android/app/src/Views/Login/Login';
+import Initial from './android/app/src/Views/Initial/Initial';
 import Home from './android/app/src/Views/Home/Home';
 import Details from './android/app/src/Views/Details/Details';
 import Edit from './android/app/src/Views/Edit/Edit';
@@ -20,6 +22,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const drawerRef = useRef(null);
+  const [gestureEnabled, setGestureEnabled] = useState(true); // Estado para controlar a ativação do GestureRecognizer
 
   const buttonHeader = () => {
     if (!isOpenDrawer) {
@@ -30,13 +33,17 @@ export default function App() {
   };
 
   const openDrawer = () => {
-    drawerRef.current.open();
-    setIsOpenDrawer(true);
+    if (gestureEnabled) {
+      drawerRef.current.open();
+      setIsOpenDrawer(true);
+    }
   };
 
   const closeDrawer = () => {
-    drawerRef.current.close();
-    setIsOpenDrawer(false);
+    if (gestureEnabled) {
+      drawerRef.current.close();
+      setIsOpenDrawer(false);
+    }
   };
 
   const gestureConfig = {
@@ -59,9 +66,10 @@ export default function App() {
           openDrawerOffset={0.3}
           panCloseMask={0.2}
           tapToClose={true}
+          onClose={closeDrawer}
           styles={{drawer: {backgroundColor: '#fff'}}}>
           <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Initial"
             screenOptions={{
               headerStyle: {
                 backgroundColor: 'black',
@@ -79,12 +87,49 @@ export default function App() {
               headerTintColor: 'white',
               headerTitleAlign: 'center',
             }}>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              listeners={{
+                focus: () => {
+                  // Desabilitar GestureRecognizer ao focar na tela de Login
+                  setGestureEnabled(true);
+                },
+              }}
+            />
             <Stack.Screen name="Details" component={Details} />
             <Stack.Screen name="Edit" component={Edit} />
             <Stack.Screen name="Create" component={CreateProduct} />
             <Stack.Screen name="Search" component={SearchProducts} />
             <Stack.Screen name="About" component={About} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false, // Omitir o header
+                drawerLockMode: 'locked-closed', // Desabilitar a gaveta (drawer)
+              }}
+              listeners={{
+                focus: () => {
+                  // Desabilitar GestureRecognizer ao focar na tela de Login
+                  setGestureEnabled(false);
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Initial"
+              component={Initial}
+              options={{
+                headerShown: false, // Omitir o header
+                drawerLockMode: 'locked-closed', // Desabilitar a gaveta (drawer)
+              }}
+              listeners={{
+                focus: () => {
+                  // Desabilitar GestureRecognizer ao focar na tela de Login
+                  setGestureEnabled(false);
+                },
+              }}
+            />
           </Stack.Navigator>
         </Drawer>
       </GestureRecognizer>
