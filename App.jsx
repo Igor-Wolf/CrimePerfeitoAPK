@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {TouchableOpacity} from 'react-native';
@@ -16,6 +16,7 @@ import SearchProducts from './android/app/src/Views/SearchProducts/SearchProduct
 import {DrawerContent} from './android/app/src/Components/Drawer';
 import About from './android/app/src/Views/About/About';
 import BackButtonHandler from './android/app/src/Components/BackButton';
+import Orientation from 'react-native-orientation-locker';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,15 @@ export default function App() {
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 80,
   };
+
+  useEffect(() => {
+
+
+    Orientation.lockToPortrait();
+
+
+  })
+
 
   return (
     <NavigationContainer>
